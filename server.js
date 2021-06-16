@@ -1,11 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
-
+const cors = require('cors');
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const database = {
     users: [
@@ -33,12 +31,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req,res) => {
-    bcrypt.compare('apples', '$2b$04$VxBePf6G5pH.nRJOOr7EHuq/pRRJuUv2hnfhkMRHMR8y1y5sKKZdK', (err, res) => {
-        console.log(res);
-    })
-    
+       
     if(req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
-        res.json('signing');
+        res.json('signin');
     } else {
         res.status(400).json('error logging in');
     }
@@ -93,6 +88,6 @@ app.put('/image', (req, res) => {
 })
 
 app.listen(3001, () => {
-    console.log('app is running on port 3000')
+    console.log('app is running on port 3001')
 });
 
